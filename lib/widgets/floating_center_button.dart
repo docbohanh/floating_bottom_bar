@@ -2,11 +2,15 @@ part of floating_bottom_bar;
 
 /// [FloatingCenterButton] class shows a
 class FloatingCenterButton extends StatefulWidget {
-  const FloatingCenterButton(
-      {required this.child, this.onAnimationComplete, Key? key})
-      : super(key: key);
+  const FloatingCenterButton({
+    required this.child,
+    this.onAnimationComplete,
+    this.onTap,
+    Key? key,
+  }) : super(key: key);
   final Widget child;
   final VoidCallback? onAnimationComplete;
+  final VoidCallback? onTap;
 
   @override
   State<FloatingCenterButton> createState() => _FloatingCenterButtonState();
@@ -33,7 +37,10 @@ class _FloatingCenterButtonState extends State<FloatingCenterButton>
     return Center(
       child: RotationTransition(
         turns: Tween(begin: 0.0, end: 1.0).animate(_animationController),
-        child: widget.child,
+        child: InkWell(
+          onTap: widget.onTap,
+          child: widget.child,
+        ),
       ),
     );
   }
